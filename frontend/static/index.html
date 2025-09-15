@@ -1,0 +1,22 @@
+
+<!doctype html>
+<html>
+  <head><meta charset="utf-8"><title>Mini MS App</title></head>
+  <body>
+    <h1>Mini Microservices App</h1>
+    <p><button id="load">Load events from events-service</button></p>
+    <pre id="out"></pre>
+    <script>
+      document.getElementById('load').onclick = async () => {
+        document.getElementById('out').textContent = 'loading...';
+        try {
+          const res = await fetch('/api/events');
+          const j = await res.json();
+          document.getElementById('out').textContent = JSON.stringify(j, null, 2);
+        } catch(e) {
+          document.getElementById('out').textContent = 'error: ' + e;
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,13 @@
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: booking-service
+  namespace: ms-demo
+spec:
+  selector:
+    app: booking-service
+    version: blue   # switch to 'green' to route to green
+  ports:
+  - port: 80
+    targetPort: 5001
