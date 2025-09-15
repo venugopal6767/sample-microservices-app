@@ -1,29 +1,31 @@
-Three-tier Todo App (React frontend, Node backend, Postgres)
+Three-tier Todo App - Full working version (Complete)
+----------------------------------------------------
 
-How to run (on your machine):
+How to run (KillerCoda or local with Docker):
 
-1. Unzip the package and open a terminal in project root:
-   cd three-tier-todo-app-full
+1. Ensure Docker and docker compose are available. On minimal hosts, install docker and the compose plugin as needed.
 
-2. Build and run with Docker Compose (this builds frontend & backend images):
-   docker compose up --build
+2. Unzip and change directory:
+   unzip three-tier-todo-app-complete.zip -d app
+   cd app
 
-   - Frontend will be available at: http://localhost:8080
-   - Backend API (inside compose network accessible by service name 'backend') is at: http://backend:3000 (inside containers)
-   - Metrics endpoint: http://localhost:3000/metrics
-   - Postgres: service name 'db' (inside network); mapped to host port 5432
+3. Build & start:
+   docker compose up --build -d
 
-3. Register and login via the frontend UI. Metrics exposed at /metrics will include counters for:
-   - todoapp_requests_total
-   - todoapp_user_signups_total
-   - todoapp_user_logins_total
-   - todoapp_events_created_total
-   - todoapp_tasks_created_total
+4. Access:
+   Frontend: http://localhost:8080  (or use the public URL in KillerCoda port mapping)
+   Backend API: http://localhost:3000
+   Metrics: http://localhost:3000/metrics
 
-4. Stop and remove containers:
+5. Test flow:
+   - Register a user via the UI.
+   - Login (token stored in localStorage).
+   - Create tasks, toggle complete, delete.
+   - Observe metrics increment at /metrics.
+
+6. Teardown:
    docker compose down -v
 
 Notes:
-- Frontend proxies /api calls to http://backend:3000 inside the container network (nginx config).
-- Use the .env file to change DB credentials and JWT secret.
-- For production/real workloads, secure secrets and use managed DBs.
+- Inside containers services talk via service names: backend -> db uses host 'db'; frontend nginx proxies to 'backend'.
+- For production use, secure .env and use managed DBs and monitoring.
